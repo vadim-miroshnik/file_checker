@@ -6,7 +6,7 @@
 {% for file in files_list %}
 <div class="post-entry">
   <h2><a href="{% url 'files_detail' file.pk %}">{{ file.name }}</a></h2>
-  <p>{{ file.status }}</p>
+  <p>{{ file.get_status_display }}</p>
 </div>
 {% endfor %}
 {% endblock content %}

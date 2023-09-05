@@ -2,16 +2,15 @@ from django.conf import settings
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 
 from django_project.models import TimestampedModel
 
 
 class Files(TimestampedModel):
     class FileStatus(models.TextChoices):
-        CREATED = "CR", _("Created")
-        UPLOADED = "UP", _("Uploaded")
-        CHECKED = "CH", _("Checked")
+        CREATED = "CR", "Created"
+        UPLOADED = "UP", "Uploaded"
+        CHECKED = "CH", "Checked"
 
     name = models.CharField(max_length=50)
     status = models.CharField(
@@ -21,7 +20,10 @@ class Files(TimestampedModel):
     )
 
     file = models.FileField(
-        null=True, blank=True, validators=[FileExtensionValidator(["py"])]
+        null=True,
+        blank=True,
+        validators=[FileExtensionValidator(["py"])],
+        upload_to="uploads/",
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
