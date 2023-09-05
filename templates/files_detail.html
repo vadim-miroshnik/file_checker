@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="post-entry">
+  <h2>{{ files.name }}</h2>
+  <p>{{ files.state }}</p>
+</div>
+<a href="{% url 'files_edit' files.pk %}">+ Edit file</a>
+{% endblock content %}
