@@ -6,4 +6,5 @@
   <p>{{ files.state }}</p>
 </div>
 <a href="{% url 'files_edit' files.pk %}">+ Edit file</a>
+<a href="{% url 'files_delete' files.pk %}">+ Delete file</a>
 {% endblock content %}
