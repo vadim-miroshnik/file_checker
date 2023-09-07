@@ -35,3 +35,12 @@ class Files(TimestampedModel):
 
     def get_absolute_url(self):
         return reverse("files_detail", kwargs={"pk": self.pk})
+
+    # def save(self, *args, **kwargs):
+    #     if self.file:
+    #         self.file.delete(False)
+    #     super().save(*args, **kwargs)
+
+    # def delete(self, *args, **kwargs):
+    #     self.file.delete()
+    #     super().delete(*args, **kwargs)

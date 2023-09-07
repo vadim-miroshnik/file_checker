@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -5,17 +6,20 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from .models import Files
 
 
-class FileListView(ListView):
+class FileListView(LoginRequiredMixin, ListView):
     model = Files
     template_name = "home.html"
 
+    def get_queryset(self):
+        return Files.objects.filter(author=self.request.user)
 
-class FileDetailView(DetailView):
+
+class FileDetailView(LoginRequiredMixin, DetailView):
     model = Files
     template_name = "files_detail.html"
 
 
-class FileCreateView(CreateView):
+class FileCreateView(LoginRequiredMixin, CreateView):
     model = Files
     fields = ["file"]
     template_name = "files_new.html"
@@ -27,13 +31,13 @@ class FileCreateView(CreateView):
         return super(FileCreateView, self).form_valid(form)
 
 
-class FileUpdateView(UpdateView):
+class FileUpdateView(LoginRequiredMixin, UpdateView):
     model = Files
     template_name = "files_edit.html"
     fields = ["name", "file"]
 
 
-class FileDeleteView(DeleteView):
+class FileDeleteView(LoginRequiredMixin, DeleteView):
     model = Files
     template_name = "files_delete.html"
     success_url = reverse_lazy("home")
