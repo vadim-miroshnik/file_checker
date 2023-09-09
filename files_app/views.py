@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models.functions import Coalesce
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -11,7 +12,9 @@ class FileListView(LoginRequiredMixin, ListView):
     template_name = "home.html"
 
     def get_queryset(self):
-        return Files.objects.filter(author=self.request.user)
+        return Files.objects.filter(author=self.request.user).order_by(
+            Coalesce("modified", "created").asc()
+        )
 
 
 class FileDetailView(LoginRequiredMixin, DetailView):

@@ -12,12 +12,12 @@ class Files(TimestampedModel):
         UPLOADED = "UP", "Uploaded"
         CHECKED = "CH", "Checked"
 
-    name = models.CharField(max_length=50)
     status = models.CharField(
         max_length=2,
         choices=FileStatus.choices,
         default=FileStatus.CREATED,
     )
+    name = models.CharField(max_length=50)
 
     file = models.FileField(
         null=True,
