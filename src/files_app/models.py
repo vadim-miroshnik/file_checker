@@ -35,3 +35,8 @@ class Files(TimestampedModel):
 
     def get_absolute_url(self):
         return reverse("files_detail", kwargs={"pk": self.pk})
+
+
+class Logs(TimestampedModel):
+    log = models.TextField()
+    file = models.ForeignKey(Files, verbose_name="File", on_delete=models.CASCADE)
