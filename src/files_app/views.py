@@ -42,6 +42,10 @@ class FileUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "files_edit.html"
     fields = ["name", "file"]
 
+    def form_valid(self, form):
+        form.instance.status = Files.FileStatus.CREATED
+        return super().form_valid(form)
+
 
 class FileDeleteView(LoginRequiredMixin, DeleteView):
     model = Files

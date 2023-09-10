@@ -16,6 +16,16 @@ services:
       - CELERY_BACKEND=redis://redis:6379/0
     depends_on:
       - redis
+      - db
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+
+  redis:
+    image: redis:7-alpine
 
   celery:
     build: ./src
@@ -32,8 +42,17 @@ services:
       - web
       - redis
 
-  redis:
-    image: redis:7-alpine
+  celery-beat:
+      build: ./src
+      command: celery -A django_project beat -l info
+      volumes:
+        - ./src:/usr/src/app
+      environment:
+        - DEBUG=1
+        - SECRET_KEY=dbaa1_i7%*3r9-=z-+_mz4r-!qeed@(-a_r(g@k8jo8y3r27%m
+        - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      depends_on:
+        - redis
 
   dashboard:
     build: ./src
@@ -50,3 +69,6 @@ services:
       - web
       - redis
       - celery
+
+volumes:
+  postgres_data:
