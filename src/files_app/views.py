@@ -7,7 +7,6 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from .models import Files
-from .tasks import create_task
 
 
 class FileListView(LoginRequiredMixin, ListView):
@@ -51,11 +50,3 @@ class FileDeleteView(LoginRequiredMixin, DeleteView):
     model = Files
     template_name = "files_delete.html"
     success_url = reverse_lazy("home")
-
-
-@csrf_exempt
-def run_task(request):
-    if request.POST:
-        task_type = request.POST.get("type")
-        task = create_task.delay(int(task_type))
-        return JsonResponse({"task_id": task.id}, status=202)

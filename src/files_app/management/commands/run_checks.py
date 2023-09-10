@@ -2,6 +2,8 @@ from django.apps import apps
 from django.core.management.base import BaseCommand
 from django.db.models.functions import Coalesce
 
+from files_app.tasks import process_file
+
 
 class Command(BaseCommand):
     help = "Run check on created files"
@@ -14,4 +16,5 @@ class Command(BaseCommand):
         )
         for f in files:
             self.stdout.write(self.style.SUCCESS(f"Created file:{f.name}"))
+            process_file.delay(f.pk)
         self.stdout.write(self.style.SUCCESS("Done."))
