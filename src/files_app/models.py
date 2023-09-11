@@ -9,7 +9,7 @@ from django_project.models import TimestampedModel
 class Files(TimestampedModel):
     class FileStatus(models.TextChoices):
         CREATED = "CR", "Created"
-        UPLOADED = "UP", "Uploaded"
+        QUEUED = "QU", "Queued"
         CHECKED = "CH", "Checked"
 
     status = models.CharField(

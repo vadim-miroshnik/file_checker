@@ -29,6 +29,7 @@ services:
     env_file: ./src/.env
     volumes:
       - ./src:/usr/src/app
+      - ./tmp/messages:/tmp/messages
     depends_on:
       - web
       - redis

@@ -3,6 +3,7 @@ from django.core.management.base import BaseCommand
 from django.db.models.functions import Coalesce
 
 from files_app.tasks import process_file
+from files_app.models import Files
 
 
 class Command(BaseCommand):
@@ -11,7 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         files = (
             apps.get_model("files_app.Files")
-            .objects.filter(status="CR")
+            .objects.filter(status=Files.FileStatus.CREATED)
             .order_by(Coalesce("modified", "created").asc())
         )
         for f in files:
