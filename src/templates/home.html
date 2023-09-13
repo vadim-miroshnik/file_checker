@@ -1,30 +1,32 @@
 {% extends "base.html" %}
-
-{% block title %}Home{% endblock title %}
-
+{% block title %}
+    Home
+{% endblock title %}
 {% block content %}
-<table class="table">
-    <thead>
-        <tr>
-          <th scope="col">Filename</th>
-          <th scope="col">Uploaded</th>
-          <th scope="col">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for file in files_list %}
-        <tr>
-            <td><a href="{% url 'files_detail' file.pk %}">{{ file.name }}</a></td>
-            <td>{% if file.modified %}
-                    {{ file.modified|date:'d.m.Y H:i' }}
-                {% else %}
-                    {{ file.created|date:'d.m.Y H:i' }}
-                {% endif %}
-            </td>
-            <td>{{ file.get_status_display }}</td>
-          </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Filename</th>
+                <th scope="col">Uploaded</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in files_list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'files_detail' file.pk %}">{{ file.name }}</a>
+                    </td>
+                    <td>
+                        {% if file.modified %}
+                            {{ file.modified|date:'d.m.Y H:i' }}
+                        {% else %}
+                            {{ file.created|date:'d.m.Y H:i' }}
+                        {% endif %}
+                    </td>
+                    <td>{{ file.get_status_display }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}

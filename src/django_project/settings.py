@@ -154,4 +154,4 @@ CELERY_BEAT_SCHEDULE = {
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = "/tmp/messages"  # change this to a proper location
+EMAIL_FILE_PATH = "/tmp/messages"
