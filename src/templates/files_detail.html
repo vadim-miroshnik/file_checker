@@ -8,6 +8,6 @@
     <h5>Logs</h5>
     {% for log in file.log_set.all %}<p>{{ log.created|date:'d.m.Y H:i' }} &middot; {{ log.log_txt }}</p>{% endfor %}
     <hr>
-    <a href="{% url 'files_edit' file.pk %}">+ Edit file</a>
-    <a href="{% url 'files_delete' file.pk %}">+ Delete file</a>
+    <a href="{% url 'files_edit' file.pk %}">Edit file</a>
+    <a href="{% url 'files_delete' file.pk %}">Delete file</a>
 {% endblock content %}
