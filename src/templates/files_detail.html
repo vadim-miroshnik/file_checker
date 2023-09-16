@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="post-entry">
-        <h2>{{ files.name }}</h2>
-        <p>{{ files.state }}</p>
+        <h2>{{ file.name }}</h2>
+        <p>{{ file.state }}</p>
     </div>
     <hr>
     <h5>Logs</h5>
-    {% for logs in files.logs_set.all %}<p>{{ logs.created|date:'d.m.Y H:i' }} &middot; {{ logs.log }}</p>{% endfor %}
+    {% for log in file.log_set.all %}<p>{{ log.created|date:'d.m.Y H:i' }} &middot; {{ log.log_txt }}</p>{% endfor %}
     <hr>
-    <a href="{% url 'files_edit' files.pk %}">+ Edit file</a>
-    <a href="{% url 'files_delete' files.pk %}">+ Delete file</a>
+    <a href="{% url 'files_edit' file.pk %}">+ Edit file</a>
+    <a href="{% url 'files_delete' file.pk %}">+ Delete file</a>
 {% endblock content %}

@@ -4,26 +4,26 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from .models import Files
+from .models import File
 
 
 class FileListView(LoginRequiredMixin, ListView):
-    model = Files
+    model = File
     template_name = "home.html"
 
     def get_queryset(self):
-        return Files.objects.filter(author=self.request.user).order_by(
+        return File.objects.filter(author=self.request.user).order_by(
             Coalesce("modified", "created").asc()
         )
 
 
 class FileDetailView(LoginRequiredMixin, DetailView):
-    model = Files
+    model = File
     template_name = "files_detail.html"
 
 
 class FileCreateView(LoginRequiredMixin, CreateView):
-    model = Files
+    model = File
     fields = ["file"]
     template_name = "files_new.html"
     success_url = reverse_lazy("home")
@@ -35,16 +35,16 @@ class FileCreateView(LoginRequiredMixin, CreateView):
 
 
 class FileUpdateView(LoginRequiredMixin, UpdateView):
-    model = Files
+    model = File
     template_name = "files_edit.html"
     fields = ["name", "file"]
 
     def form_valid(self, form):
-        form.instance.status = Files.FileStatus.CREATED
+        form.instance.status = File.FileStatus.CREATED
         return super().form_valid(form)
 
 
 class FileDeleteView(LoginRequiredMixin, DeleteView):
-    model = Files
+    model = File
     template_name = "files_delete.html"
     success_url = reverse_lazy("home")

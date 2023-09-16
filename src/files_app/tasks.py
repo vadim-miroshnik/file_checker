@@ -4,7 +4,7 @@ from celery import shared_task
 from django.core.mail import send_mail
 from django.core.management import call_command
 
-from .models import Files, Logs
+from .models import File, Log
 
 
 @shared_task(
@@ -13,16 +13,16 @@ from .models import Files, Logs
     retry_backoff=True,
     retry_kwargs={"max_retries": 5},
 )
-def send_report(log_id: Logs.pk):
-    log = Logs.objects.get(pk=log_id)
+def send_report(self, log_id: Log.pk):
+    log = Log.objects.get(pk=log_id)
     send_mail(
         f"File {log.file.name} checked",
-        log.log,
+        log.log_txt,
         "from@example.com",
         ["to@example.com"],
         fail_silently=False,
     )
-    Logs.objects.create(log="Report sent", file=log.file)
+    Log.objects.create(log_txt="Report sent", file=log.file)
 
 
 @shared_task(
@@ -30,15 +30,15 @@ def send_report(log_id: Logs.pk):
     autoretry_for=(Exception,),
     retry_kwargs={"max_retries": 7, "countdown": 5},
 )
-def process_file(file_id: Files.pk):
-    file = Files.objects.get(pk=file_id)
-    file.status = Files.FileStatus.QUEUED
+def process_file(self, file_id: File.pk):
+    file = File.objects.get(pk=file_id)
+    file.status = File.FileStatus.QUEUED
     file.save(update_fields=["status"])
     time.sleep(10)
-    file = Files.objects.get(pk=file_id)
-    file.status = Files.FileStatus.CHECKED
+    file = File.objects.get(pk=file_id)
+    file.status = File.FileStatus.CHECKED
     file.save(update_fields=["status"])
-    log = Logs.objects.create(log="Check completed", file=file)
+    log = Log.objects.create(log_txt="Check completed", file=file)
     send_report.delay(log.pk)
 
 

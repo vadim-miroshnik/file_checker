@@ -12,7 +12,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for file in files_list %}
+            {% for file in file_list %}
                 <tr>
                     <td>
                         <a href="{% url 'files_detail' file.pk %}">{{ file.name }}</a>

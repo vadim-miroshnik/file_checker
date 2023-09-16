@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Files, Logs
+from .models import File, Log
 
-admin.site.register(Files)
-admin.site.register(Logs)
+admin.site.register(File)
+admin.site.register(Log)

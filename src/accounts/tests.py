@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from django.urls import reverse
+from django.urls import resolve, reverse
+
+from .views import SignUpView
 
 
 class UsersManagersTests(TestCase):
@@ -27,15 +29,13 @@ class UsersManagersTests(TestCase):
         self.assertTrue(admin_user.is_superuser)
 
 
-class SignupPageTests(TestCase):  # new
-    def test_url_exists_at_correct_location_signupview(self):
+class SignupPageTests(TestCase):
+    def test_signup_template(self):
         response = self.client.get("/accounts/signup/")
         self.assertEqual(response.status_code, 200)
-
-    def test_signup_view_name(self):
-        response = self.client.get(reverse("signup"))
-        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "registration/signup.html")
+        self.assertContains(response, "Sign Up")
+        self.assertNotContains(response, "Hi there! I should not be on the page.")
 
     def test_signup_form(self):
         response = self.client.post(
@@ -49,3 +49,7 @@ class SignupPageTests(TestCase):  # new
         self.assertEqual(response.status_code, 302)
         self.assertEqual(get_user_model().objects.all().count(), 1)
         self.assertEqual(get_user_model().objects.all()[0].username, "testuser")
+
+    def test_signup_view(self):
+        view = resolve("/accounts/signup/")
+        self.assertEqual(view.func.__name__, SignUpView.as_view().__name__)

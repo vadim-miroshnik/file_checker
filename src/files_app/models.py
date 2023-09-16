@@ -6,7 +6,7 @@ from django.urls import reverse
 from django_project.models import TimestampedModel
 
 
-class Files(TimestampedModel):
+class File(TimestampedModel):
     class FileStatus(models.TextChoices):
         CREATED = "CR", "Created"
         QUEUED = "QU", "Queued"
@@ -37,6 +37,6 @@ class Files(TimestampedModel):
         return reverse("files_detail", kwargs={"pk": self.pk})
 
 
-class Logs(TimestampedModel):
-    log = models.TextField()
-    file = models.ForeignKey(Files, verbose_name="File", on_delete=models.CASCADE)
+class Log(TimestampedModel):
+    log_txt = models.TextField()
+    file = models.ForeignKey(File, verbose_name="File", on_delete=models.CASCADE)
