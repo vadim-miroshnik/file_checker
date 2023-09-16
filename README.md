@@ -19,11 +19,14 @@ make test
 ```
 
 ## Интерфейс
-![Alt text](images/home.jpeg)
 Список загруженных файлов
+![Список загруженных файлов](images/home.jpeg)
 
-![Alt text](images/detail.jpeg)
 Отчет проверки файла
+![Отчет проверки файла](images/detail.jpeg)
 
-![Alt text](images/flower.jpeg)
+Письмо с результатом проверки
+![Письмо с результатом проверки](images/email.jpg)
+
 Мониторинг в Flower
+![Мониторинг в Flower](images/flower.jpeg)
