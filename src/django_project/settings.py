@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -144,8 +143,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
+CELERY_BROKER_URL = env.str("CELERY_BROKER", "redis://redis:6379/0")
+CELERY_RESULT_BACKEND = env.str("CELERY_BROKER", "redis://redis:6379/0")
 CELERY_BEAT_SCHEDULE = {
     "start_run_checks": {
         "task": "files_app.tasks.start_run_checks",
