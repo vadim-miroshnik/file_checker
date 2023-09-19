@@ -1,0 +1,14 @@
+django
+black
+celery
+dj-database-url
+django-cache-url
+dj-email-url
+django-behaviors
+django-cleanup
+crispy-bootstrap5
+django-crispy-forms
+environs
+flower
+psycopg2-binary
+redis
