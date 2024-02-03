@@ -177,4 +177,4 @@ pyrightconfig.json
 .vscode/
 media/
 
-/files_app/staticfiles/
+/src/files_app/staticfiles/
